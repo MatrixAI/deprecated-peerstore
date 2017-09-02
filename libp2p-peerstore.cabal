@@ -1,12 +1,12 @@
-name:                  peerstore
-version:               0.1.0.0
+name:                  libp2p-peerstore
+version:               0.1.0
 -- synopsis:
 -- description:
 homepage:              https://github.com/MatrixAI/haskell-libp2p-peerstore#readme
-license:               BSD3
+license:               Apache-2.0
 license-file:          LICENSE
 author:                Quoc-An Ho
-maintainer:            quoc-an.ho@matrix.ai
+maintainer:            quoc.ho@matrix.ai
 copyright:             Copyright: (c) 2017 Quoc-An Ho
 category:              Network
 build-type:            Simple
@@ -15,7 +15,7 @@ cabal-version:         >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     LibP2P.Peerstore
+  exposed-modules:     Network.LibP2P.Peerstore
   build-depends:       base         >= 4.9  && < 4.10,
                        attoparsec   >= 0.13 && < 0.14,
                        binary       >= 0.8  && < 0.9,
@@ -30,7 +30,7 @@ test-suite spec
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
-  build-depends:       peerstore, 
+  build-depends:       libp2p-peerstore, 
                        base         >= 4.9  && < 4.10,
                        bytes        >= 0.15 && < 0.16,
                        text         >= 1.2  && < 1.3

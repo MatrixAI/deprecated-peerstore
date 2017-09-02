@@ -1,10 +1,15 @@
-module Network.Peerstore (
-    Peerstore(..)
+module Network.LibP2P.Peerstore (
+    newPeerstore,
+    peers,
+    peerInfo,
+    getProtocols,
 ) where
 
 import Control.Concurrent.STM
-import LibP2P.Protocol (Protocol)
-import Data.HashMap.Lazy (empty)
+import Data.Multiaddr         (Multiaddr)
+import LibP2P.Peer            (PeerId) 
+import LibP2P.Protocol        (Protocol)
+import Data.HashMap.Lazy      (HashMap, empty)
 
 -- TODO : Protocol should be extended later to a custom data type 
 -- later that represents a fully validated protocol name in the peerstore
@@ -50,14 +55,14 @@ addProtocols pid ps protos = do
     case liftM protocols mpi of
         Just p -> writeTVar p (protos ++ p)
 
--- Make a new set of protocols to assign to the peerId: erase existing
+-- Make a new set of protocols to assign to the given peer
 setProtocols :: PeerId -> Peerstore -> [Protocol] -> STM ()
 setProtocols pid ps protos = do
     mpi <- peerInfo pid ps
     case liftM protocols mpi of
         Just p -> writeTVar p protos
 
--- Determine from a set of protocols, which are supported by a given peer
+-- From a set of protocols, return which are supported for a given peer
 supportsProtocols :: PeerId -> Peerstore -> [Protocol] -> STM [Protocol]
 supportsProtocols pid ps protos = do
     supported <- getProtocols pid ps
